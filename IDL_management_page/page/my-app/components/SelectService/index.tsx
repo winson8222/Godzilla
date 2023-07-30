@@ -54,7 +54,7 @@ export default function SelectServiceComponent(props: any) {
         setRunning(false)
       }
 
-      if (port === null) {
+      if (port === null || port === '') {
         setUrl("")
       } else {
         setUrl(port)
@@ -124,6 +124,7 @@ export default function SelectServiceComponent(props: any) {
         .then((response : any) => {
           if (response.data.outcome === 'Gateway Started') {
             localStorage.setItem("running", "y")
+            localStorage.setItem("port", url)
             setRunning(true)
             const toastId = toast.success(`Gateway Started Successfully`);
 
@@ -172,6 +173,8 @@ export default function SelectServiceComponent(props: any) {
         .then((response : any) => {
           if (response.data.outcome == 'Gateway Deleted') {
             const toastId = toast.success(`Gateway Deleted`);
+            localStorage.setItem("port", '')
+            
 
             const redirectInterval = setInterval(() => {
               
@@ -188,7 +191,7 @@ export default function SelectServiceComponent(props: any) {
           setisProcessingDone(false)
           setgenerated(false);
           setDeleting(false)
-
+          setUrl('')
         })
         .catch((error) => {
           console.log(error); 
